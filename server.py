@@ -2,24 +2,13 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-@app.route('/webhook', methods=['POST', 'GET', 'PUT', 'DELETE'])
+@app.route('/webhook', methods=['POST'])
 def webhook():
-    if request.method == 'POST':
-        # Handle POST request
-        data = request.get_json()
-        print('POST request received:', data)
-        return jsonify({'status': 'received', 'data': data})
+    data = request.get_json()
+    form_name = data.get('form_name')  # Assuming form name is sent in JSON
     
-    elif request.method in ['GET', 'PUT', 'DELETE']:
-        # Handle GET, PUT, DELETE requests
-        # For these methods, you might want to return something else or handle differently
-        data = request.args  # For GET, data will be in the query string
-        print(f'{request.method} request received:', data)
-        return jsonify({'status': 'received', 'data': data})
-
-    else:
-        # Other HTTP methods not allowed
-        return jsonify({'status': 'error', 'message': 'Method not allowed'}), 405
+  
+    return jsonify({'status': 'Form not processed'}), 400
 
 
 @app.route('/test', methods=['GET'])
