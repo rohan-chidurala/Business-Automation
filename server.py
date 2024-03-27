@@ -2,14 +2,12 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-@app.route('/webhook', methods=['POST'])
+@app.route('/webhook', methods=['GET'])
 def webhook():
     data = request.get_json()
-    form_name = data.get('form_name')  # Assuming form name is sent in JSON
     
-  
-    return jsonify({'status': 'Form not processed'}), 400
-
+    # This will return the entire JSON payload received from the request
+    return jsonify({'status': 'Success', 'received_data': data}), 200
 
 @app.route('/test', methods=['GET'])
 def test():
